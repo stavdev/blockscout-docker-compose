@@ -1,0 +1,25 @@
+version: '3'
+services:
+    blockscout:
+      image: "docker.pkg.github.com/stavdev/blockscout-docker-compose/blockscout-docker-compose:main"
+      ports:
+        - "4000:4000"
+      networks:
+        - postgres
+
+    postgres:
+      container_name: "postgres_blockscout"
+      image: "postgres"
+      environment:
+        POSTGRES_USER: blockscout
+        POSTGRES_PASSWORD: blockscout
+        POSTGRES_DB: blockscout
+      volumes:
+        - postgres:/data/postgres
+      ports:
+        - "5432:5432"
+      networks:
+        - postgres
+networks:
+  postgres:
+    driver: "bridge"
