@@ -14,7 +14,7 @@ services:
         POSTGRES_PASSWORD: blockscout
         POSTGRES_DB: blockscout
       volumes:
-        - postgres:/data/postgres
+        - ./postgres-data:/var/lib/postgresql/data
       ports:
         - "5433:5433"
       networks:
