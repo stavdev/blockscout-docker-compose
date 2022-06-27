@@ -6,7 +6,6 @@ services:
         - "4000:4000"
       networks:
         - postgres
-
     postgres:
       container_name: "postgres_blockscout"
       image: "postgres"
