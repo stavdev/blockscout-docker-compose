@@ -1,10 +1,10 @@
 version: '3'
 services:
-  postgres_blockscout:
+  postgresblockscout:
     container_name: "postgres_blockscout"
     image: "postgres:latest"
     networks:
-      - database_blockscout
+      - databaseblockscout
     environment:
       POSTGRES_USER: blockscout
       POSTGRES_PASSWORD: blockscout
@@ -20,22 +20,22 @@ services:
     container_name: "blockscout"
     image: "docker.pkg.github.com/stavdev/blockscout-docker/blockscout-docker:main"
     networks:
-      - postgres_blockscout
+      - databaseblockscout
     ports:
       - "4000:4000"
     depends_on:
-      - postgres_blockscout
+      - postgresblockscout
     tty: true
     environment:
       # COIN: "TMY"
       MIX_ENV: "prod"
       SECRET_KEY_BASE: "VTIB3uHDNbvrY0+60ZWgUoUBKDn9ppLR8MI4CpRz4/qLyEFs54ktJfaNT6Z221No"
       # ETHEREUM_JSONRPC_VARIANT: "geth"
-      DATABASE_URL: postgresql://blockscout:blockscout@postgres_blockscout:5433/blockscout?ssl=false
+      DATABASE_URL: postgresql://blockscout:blockscout@databaseblockscout:5433/blockscout?ssl=false
       # ETHEREUM_JSONRPC_HTTP_URL: http://database:8545
       # ETHEREUM_JSONRPC_WS_URL: http://database:8546
     expose:
       - "4000"
 networks:
-  database_blockscout:
+  databaseblockscout:
     driver: "bridge"
