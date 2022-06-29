@@ -1,7 +1,6 @@
 version: '3'
 services:
   db:
-    container_name: "postgres_blockscout"
     image: "postgres:latest"
     networks:
       - blockscout
@@ -17,7 +16,6 @@ services:
       - "5433"
 
   blockscout:
-    container_name: "blockscout"
     image: "docker.pkg.github.com/stavdev/blockscout-docker/blockscout-docker:main"
     networks:
       - blockscout
