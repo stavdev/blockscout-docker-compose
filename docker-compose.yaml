@@ -1,24 +1,17 @@
 version: '3'
 services:
   postgres:
-    container_name: "postgres_blockscout"
     image: postgres:latest
     restart: always
     networks:
       - database
-    restart: always
-    environment:
-      PGUSER: postgres
-      POSTGRES_PASSWORD: postgres
+    env_file:
+      - database.env
     ports:
       - "5433:5433"
-    expose:
-      - "5433"
 
   blockscout:
-    container_name: "blockscout"
     image: "docker.pkg.github.com/stavdev/blockscout-docker/blockscout-docker:main"
-    restart: always
     networks:
       - database
     ports:
@@ -27,9 +20,11 @@ services:
       - postgres
     tty: true
     environment:
-      MIX_ENV: "prod"
-      SECRET_KEY_BASE: "VTIB3uHDNbvrY0+60ZWgUoUBKDn9ppLR8MI4CpRz4/qLyEFs54ktJfaNT6Z221No"
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5433/postgres?ssl=false
+      - MIX_ENV: "prod"
+      - SECRET_KEY_BASE: "VTIB3uHDNbvrY0+60ZWgUoUBKDn9ppLR8MI4CpRz4/qLyEFs54ktJfaNT6Z221No"
+      - DATABASE_URL: postgresql://postgres:12345@postgres:5433/blockscout?ssl=false
+    expose:
+      - "4000"
 networks:
   database:
     driver: "bridge"
